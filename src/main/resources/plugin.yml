@@ -2,5 +2,10 @@ name: AntiBypass
 version: '${project.version}'
 main: dev.creativeuniverse.antibypass.AntiBypass
 api-version: 1.19
+depend:
+  - PlaceholderAPI
+softdepend:
+  - GriefPrevention
+  - WorldGuard
 authors: [ creativeuniverse ]
 description: PAPI Checks for generic checks (block placement, pvp, etc)

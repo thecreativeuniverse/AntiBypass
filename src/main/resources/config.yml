@@ -1,77 +1,68 @@
-# ============================================ #
-#                  AntiBypass                  #
-#  PAPI expansion written by creativeuniverse  #
-# ============================================ #
+# ======================================================== #
+#                        AntiBypass                        #
+#        PAPI expansion written by creativeuniverse        #
+# ======================================================== #
 
-# ============================================ #
-#                  Block Check                 #
-# -------------------------------------------- #
-#       Usage: %blockcheck_world_x_y_z%        #
-#      eg. %blockcheck_world_106_70_-295%      # #FIXME this won't work in nethre/end lolol
-# -------------------------------------------- #
-# If the player cannot edit a block at given   #
-# location, the string "false" is returned.    #
-# If the player can edit a block at given      #
-# location, the string "true" is returned.     #
-#                                              #
-# NOTE: If both types are enabled, the setting #
-# will default to blockBreakEvent. Make sure   #
-# only the setting you want is enabled!        #
-#                                              #
-# Possible settings:                           #
-#                                              #
-# - blockEvent: calls a blockBreakEvent or     # 
-#   blockPlaceEvent on given location. If you  # 
-#   are listening for the same event in your   #
-#   code/script, be aware that this will       #  
-#   interfere if plugin or java class is not   #
-#   blacklisted. MythicMob scripts will be     #
-#   given as an example for how to avoid this. #
-#   see README for more info.                  #
-#                                              #
-#   Settings:                                  #
-#   - enabled: true/false. If both blockEvent  #
-#     and hooks are enabled, it defaults to    #
-#     this setting.                            #
-#   - type: break/place. Choose which you want #
-#     to use. Recommend break, unless there is #
-#     a specific reason not to in your scripts #
-#   - blacklist: Use this to blacklist certain #
-#     plugins or java classes from the event   #
-#     listener. Leave out if you don't want to #
-#     blacklist anything.                      #
-#     - Plugins are case specific, for example #
-#       "AntiBypass", "GriefPrevention"
-#     - Classes must include the entire class, #
-#       for example com.example.EventListener. #
-#       You likely don't need to use this if   #
-#       not creating your own Java plugin      #
-#   - whitelist: same as above, except only    #
-#     includes specified plugins and/or        #
-#     classes.                                 #
-#   If you don't want to use blacklisting or   #
-#   whitelisting, don't include these options  #
-#   in config. The code will run slightly more #
-#   efficiently without these options.         # #FIXME: this may not be true in the end. 
-#                                              #
-#                                              #
-# - hooks: checks permissions on specified     #
-#   plugins. The options are limited, but      #
-#   feel free to contact me or make a PR if    #
-#   you more hooks added.                      #
-#                                              #
-#   Settings:                                  #
-#   - enabled: true/false. If both blockEvent  #
-#     and hooks are enabled, it defaults to    #
-#     blockEvent setting.                      #
-#   - include: List of hooks to include checks #
-#     on.                                      #
-#     Available hooks:                         #
-#     - GriefPrevention                        #
-#     - WorldGuard                             #
-#     - FarmProtect                            # #TODO 
-#                                              #
-# -------------------------------------------- #
+# ======================================================== #
+#                        Block Check                       #
+# -------------------------------------------------------- #
+# Usage: %blockcheck_x=<x>;y=<y>;z=<z>;world=<world_name>% #
+#         eg. %blockcheck_106_70_-295_world_nether%        #
+#            eg. %blockcheck_106_70_-295_world%            #
+# -------------------------------------------------------- #
+# If the player cannot edit a block at given location, the #
+# string "false" is returned.                              #
+# If the player can edit a block at given location, the    #
+# string "true" is returned.                               #
+#                                                          #
+# NOTE: If both types are enabled, the setting will        #
+# default to blockEvent. Make sure only the setting you    #
+# want is enabled!                                         #
+#                                                          #
+# Possible settings:                                       #
+#                                                          #
+# blockEvent: calls a blockBreakEvent or blockPlaceEvent   #
+#   on given location. If you are listening for the same   #         
+#   event in your code/script, be aware that this will     #
+#   interfere if plugin or java class is not blacklisted.  #
+#   MythicMob scripts will be provided for how to avoid    #
+#   this issue. See README for more info.                  #
+#                                                          #
+#   Settings:                                              #
+#   - enabled: true/false. If both blockEvent and hooks    #
+#     are set to enabled, it defaults to this setting.     #
+#   - type: break/place. Choose which you want to use.     #
+#     Recommend place, unless there is a specific reason   #
+#     not to in your scripts.                              #
+#   - blacklist: Use this to blacklist certain plugins or  #
+#     java classes from the event listener. Leave out if   #
+#     you don't want to blacklist anything.                #
+#     - Plugins are case specific, for example             #
+#       "AntiBypass", "GriefPrevention"                    #
+#     - Classes must include the entire class, for example #
+#       "com.example.EventListener". You most likely don't #
+#       need to use this if not creating your own Java     # 
+#       plugin                                             #
+#   - whitelist: same as above, except only includes       #
+#     specified plugins and/or classes.                    #
+#   If you don't want to use blacklisting or whitelisting, #
+#   don't include these options in config. The code will   #
+#   run slightly more efficiently without these options.   #
+#                                                          #
+#                                                          #
+# hooks: checks permissions on specified plugins. The      #
+#   options are limited, but feel free to contact me or    #
+#   make a PR if you want more hooks added.                #
+#                                                          #
+#   Settings:                                              #
+#   - enabled: true/false. If both blockEvent and hooks    #
+#     are enabled, it defaults to blockEvent setting.      #
+#   - include: List of hooks to include checks on.         #
+#     Available hooks:                                     #
+#     - GriefPrevention                                    #
+#     - WorldGuard                                         #
+#                                                          #
+# ======================================================== #
 blockcheck:
   blockEvent:
     enabled: true
@@ -91,4 +82,34 @@ blockcheck:
     include:
       - GriefPrevention
       - WorldGuard
-      - FarmProtect
+
+# ======================================================== #
+#                     Get Target Block                     #
+# -------------------------------------------------------- #
+#         Usage: %gettargetblock_<optionalParams>%         #
+#                   eg. %gettargetblock%                   #
+#            eg. %gettargetblock_maxdistance=10%           #
+#   eg. $gettargetblock_maxdistance=10;fluidmode=ALWAYS%   #
+# -------------------------------------------------------- #
+#                                                          #
+# All parameters are optional on this placeholder.         #
+# The possible parameters are:
+# - maxDistance:        Max distance from player to target.#
+#                       Returns "NULL" if nothing is found #
+#                       within this distance.              # 
+#                       Default: 5                         #
+#                                                          #
+# - fluidMode:          Whether to include water + lava.   #
+#                       Available options: ALWAYS, NEVER,  # 
+#                       or SOURCE_ONLY.                    #
+#                       Default: NEVER                     #
+#                                                          #
+# - defaultToPlayerLoc: If no target block is found,       #
+#                       should it return the player's      #
+#                       location. If false, retuns "NULL". #
+#                       Default: false                     #
+#                                                          #
+# ======================================================== #
+
+getTargetBlock:
+  enabled: true

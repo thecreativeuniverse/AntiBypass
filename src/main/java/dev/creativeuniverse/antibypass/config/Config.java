@@ -41,6 +41,12 @@ public class Config {
         }
     }
 
+    public static final String GET_TARGET_BLOCK = "getTargetBlock";
+
+    public static class GetTargetBlock {
+        public static final String ENABLED = join(GET_TARGET_BLOCK, "enabled");
+    }
+
     private static String join(String... strings) {
         return String.join(".", strings);
     }
