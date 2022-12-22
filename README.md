@@ -4,7 +4,7 @@ Developed by creativeuniverse: Iggley#7720 | github.com/thecreativeuniverse
 TODO: add stuff to this 
 
 ## MyhicMobs examples
-###BlockCheck
+### BlockCheck
 Item File:
 ```yaml
 TestItem:
